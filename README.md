@@ -29,7 +29,7 @@ Access the Swagger documentation at http://localhost:3000/api-docs.
 5. if u are entered authorization token but u getting authorization token missing error u need to enter token in Authorize the below image shows where u need to put token.
 ![Alt Text](./authorization.png)
 6. based on access i mean if customer access required u put Authorization token in Authorize in BearerAuthCustomer the below image show where u need to put
-![Alt Text](./AuthCustomer.png)
+![Alt Text](./Authcustomer.png)
 7.  based on access  i mean if Admin access required u put Authorization token in Authorize in BearerAuthAdmin the below image show where u need to put
 ![Alt Text](./AuthAdmin.png)
 
