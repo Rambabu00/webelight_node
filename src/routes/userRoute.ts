@@ -66,7 +66,7 @@ const userRouter = Router();
  *           example: John Doe
  *         email:
  *           type: string
- *           example: john@example.com
+ *           example: rambabukadagala@gmail.com
  *         password:
  *           type: string
  *           example: mysecretpassword
@@ -80,7 +80,7 @@ const userRouter = Router();
  *       properties:
  *         email:
  *           type: string
- *           example: john@example.com
+ *           example: rambabukadagala@gmail.com
  *         password:
  *           type: string
  *           example: mysecretpassword

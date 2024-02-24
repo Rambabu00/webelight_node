@@ -56,12 +56,12 @@ const productRouter=Router();
  */
 
  productRouter.post("/post-product", AuthAdmin, PostProduct);
-/**
+ /**
  * @swagger
  * /get-admin-products:
  *   get:
- *     summary: Get all products created by current admin
- *     description: Retrieve a list of all products for admin. This operation requires admin access.
+ *     summary: Get 10 products per page that products created by current admin if admin not pass page query. by defalut it will be one
+ *     description: Retrieve a list of  products that are created by admin. This operation requires admin access.
  *     security:
  *       - BearerAuthAdmin: []   # Security requirement: Admin token required
  *     parameters:
@@ -71,6 +71,11 @@ const productRouter=Router();
  *         schema:
  *           type: string
  *         description: Bearer token for authentication. Include the token in the format 'Bearer <token>'.
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           description: Page number for pagination (default is 1)
  *     responses:
  *       '200':
  *         description: Successful response with the list of all products for admin
@@ -94,14 +99,13 @@ const productRouter=Router();
  *         description: Unauthorized - Missing or invalid admin token
  */
 
-
 productRouter.get("/get-admin-products", AuthAdmin, getAllAdminProducts);
- /**
+/**
  * @swagger
  * /get-all-products:
  *   get:
- *     summary: Get all products for customers
- *     description: Retrieve a list of all products for customers. This operation requires customer access.
+ *     summary: Get 10 products per page for customers if user not pass page query by defalut it will be one
+ *     description: Retrieve a list of  products for customers. This operation requires customer access.
  *     security:
  *       - BearerAuthCustomer: []   # Security requirement: Customer token required
  *     parameters:
@@ -111,6 +115,11 @@ productRouter.get("/get-admin-products", AuthAdmin, getAllAdminProducts);
  *         schema:
  *           type: string
  *         description: Bearer token for authentication. Include the token in the format 'Bearer <token>'.
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           description: Page number for pagination (default is 1)
  *     responses:
  *       '200':
  *         description: Successful response with the list of all products for customers
@@ -133,6 +142,7 @@ productRouter.get("/get-admin-products", AuthAdmin, getAllAdminProducts);
  *       '401':
  *         description: Unauthorized - Missing or invalid customer token
  */
+  
 
 productRouter.get("/get-all-products", AuthCustomer, AllProducts);
  
