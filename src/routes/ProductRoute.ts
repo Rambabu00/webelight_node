@@ -10,6 +10,13 @@ const productRouter=Router();
  *     description: Create a new product. This operation requires admin access.
  *     security:
  *       - BearerAuthAdmin: []   # Security requirement: Admin token required
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Bearer token for authentication. Include the token in the format 'Bearer <token>'.
  *     requestBody:
  *       required: true
  *       content:
@@ -29,11 +36,11 @@ const productRouter=Router();
  *               price:
  *                 type: number
  *                 description: The price of the product
- *             required:
- *               - product_name
- *               - product_category
- *               - product_brand
- *               - price
+ *           required:
+ *             - product_name
+ *             - product_category
+ *             - product_brand
+ *             - price
  *           example:
  *             product_name: "Sample Product"
  *             product_category: "Electronics"
@@ -47,7 +54,8 @@ const productRouter=Router();
  *       '400':
  *         description: Bad request - Invalid input
  */
-productRouter.post("/post-product", AuthAdmin, PostProduct);
+
+ productRouter.post("/post-product", AuthAdmin, PostProduct);
 /**
  * @swagger
  * /get-admin-products:
@@ -187,49 +195,63 @@ productRouter.get("/get-all-products", AuthCustomer, AllProducts);
  */
 
 productRouter.get("/get-filter-products", AuthCustomer, filterProducts);
- /**
+   /**
  * @swagger
  * /update/{product_id}:
  *   put:
- *     summary: Update product details by product Id
- *     description: Update the details of a specific product. This operation requires admin access.
- *     security:
- *       - BearerAuthAdmin: []   # Security requirement: Admin token required
+ *     summary: Update a product by ID
+ *     description: Update details of a product identified by its ID. This operation requires admin access.
  *     parameters:
+ *       - in: path
+ *         name: product_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the product to update.
  *       - in: header
  *         name: Authorization
  *         required: true
  *         schema:
  *           type: string
  *         description: Bearer token for authentication. Include the token in the format 'Bearer <token>'.
- *       - in: path
- *         name: product_id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the product to be updated
- *       - in: body
- *         name: body
- *         description: Updated product details
- *         required: true
- *         content:
- *           application/json:
- *             example:
- *               product_name: "Updated Product"
- *               product_category: "Electronics"
- *               product_brand: "Updated Brand"
- *               price: 149.99
+ *     security:
+ *       - BearerAuthAdmin: []   # Security requirement: Admin token required
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               product_name:
+ *                 type: string
+ *                 description: The updated name of the product
+ *               product_category:
+ *                 type: string
+ *                 description: The updated category of the product
+ *               product_brand:
+ *                 type: string
+ *                 description: The updated brand of the product
+ *               price:
+ *                 type: number
+ *                 description: The updated price of the product
+ *           required:
+ *             - product_name
+ *             - product_category
+ *             - product_brand
+ *             - price
+ *           example:
+ *             product_name: "Updated Product"
+ *             product_category: "Electronics"
+ *             product_brand: "Updated Brand"
+ *             price: 129.99
  *     responses:
  *       '200':
- *         description: Successful response indicating product update
- *         content:
- *           application/json:
- *             example:
- *               message: Product updated successfully
+ *         description: Product updated successfully
  *       '401':
  *         description: Unauthorized - Missing or invalid admin token
  *       '404':
- *         description: Not Found - Product with the specified ID not found
+ *         description: Not Found - Product not found
  */
 
 productRouter.put("/update/:product_id", AuthAdmin, updateProduct);

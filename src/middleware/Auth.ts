@@ -9,17 +9,17 @@ interface CustomRequest extends Request {
 
 const AuthCustomer = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const token = req.header('Authorization');
-        console.log('Customer Middleware - Token:', token);
+        const tokenHeader = req.header('Authorization');
+        console.log('Customer Middleware - Token:', tokenHeader);
 
-        if (!token) {
+        if (!tokenHeader) {
             console.error('Customer Middleware - Unauthorized - Token missing');
             return res.status(401).json({
                 "statusCode": 401,
                 message: 'Unauthorized - token missing'
             });
         }
-
+        const token = tokenHeader.replace(/Bearer /g, '');
         const key = process.env.SECRET_KEY || undefined;
         if (key === undefined) {
             console.error('Customer Middleware - Internal Server Error - Secret key not defined');
@@ -48,17 +48,18 @@ const AuthCustomer = async (req: CustomRequest, res: Response, next: NextFunctio
 
 const AuthAdmin = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const token = req.header('Authorization');
-        console.log('Admin Middleware - Token:', token);
+        const tokenHeader = req.header('Authorization');
+        console.log('Admin Middleware - Token:', tokenHeader);
 
-        if (!token) {
+        if (!tokenHeader) {
             console.error('Admin Middleware - Unauthorized - Token missing');
             return res.status(401).json({
                 "statusCode": 401,
                 message: 'Unauthorized - token missing'
             });
         }
-
+        const token = tokenHeader.replace(/Bearer /g, '');
+        console.log(token)
         const key = process.env.SECRET_KEY || undefined;
         if (key === undefined) {
             console.error('Admin Middleware - Internal Server Error - Secret key not defined');

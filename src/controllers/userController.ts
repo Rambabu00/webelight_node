@@ -76,6 +76,7 @@ const login= async (req:Request, res:Response) =>{
                   if(token!==null){
                    res.status(200).send({
                        "message":`successfuly login as ${userData.data?.role}...`,
+                       "user" : userData,
                        "token":token
                        })
                   }
